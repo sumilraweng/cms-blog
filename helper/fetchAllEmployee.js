@@ -16,6 +16,6 @@ export const getBlogByParams = (obj = {}) => {
       .includeReference(["related_links"])
       .find();
   } else {
-    return Query.toJSON().includeReference(["related_links"]).find();
+    return Query.toJSON().find();
   }
 };

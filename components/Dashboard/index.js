@@ -2,21 +2,18 @@ import Card from "../Card";
 import styles from "./dashboard.module.scss";
 import { Link } from "next/link";
 
-function Dashboard(props) {
-  const blog = props.data.pop();
-  console.log(blog);
+export default function Dashboard(props) {
   return (
     <div className={styles["blog-cards"]}>
-      {/* {props.blog.map((blogElement) => (
-        <Link className={styles["blog-link"]}>
+      {props.blog.map((blogElement) => (
+        <a key={blogElement.uid} href="/#" className={styles["blog-link"]}>
           <Card
-            src={blogElement.imageUrl}
-            alt={blogElement.author}
+            src={blogElement.blog_image.url}
+            author={blogElement.title}
             title={blogElement.title}
           />
-        </Link>
-      ))} */}
+        </a>
+      ))}
     </div>
   );
 }
-export default Dashboard;

@@ -1,28 +1,30 @@
 import Image from "../common/Image";
 import Heading from "../common/Heading";
 import Paragraph from "../common/Paragraph";
-import { Link } from "react-router-dom";
-import styles from "./blog.module.scss";
-function Blog(props) {
+// import { Link } from "react-router-dom";
+import styles from "./BlogComponent.module.scss";
+function BlogComponent(props) {
+  const blog = props.blog.data[0];
   return (
+    // <h1>sumil </h1>
     <div className={styles["blog"]}>
       <div className={styles["blog-container"]}>
         <div className={styles["blog-tite"]}>
-          <Heading>{props.blog.title}</Heading>
+          <Heading>{blog.title}</Heading>
         </div>
         <div className={styles["blog-image"]}>
-          <Image src={props.blog.imageUrl} alt={props.blog.title} />
+          <Image src={blog.blog_image.url} alt={props.blog.title} />
         </div>
         <div className={styles["blog-content"]}>
-          <Paragraph data={props.blog.content} />{" "}
+          <Paragraph data={blog.blog_content} />{" "}
         </div>
       </div>
       <div className={styles["releated-links"]}>
         <ul>
-          {props.blog.links.map((link, index) => {
+          {blog.related_links.map((link, index) => {
             return (
-              <li key={`${link.id}-${index}`}>
-                <Link to={`/blog/${link.id}`}>{link.title}</Link>
+              <li key={`${link.uid}-${index}`}>
+                <a href={`/blog/${link.uid}`}>{link.title}</a>
               </li>
             );
           })}
@@ -32,4 +34,4 @@ function Blog(props) {
   );
 }
 
-export default Blog;
+export default BlogComponent;

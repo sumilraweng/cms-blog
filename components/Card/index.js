@@ -6,7 +6,7 @@ function Card(props) {
   return (
     <div className={styles["card-section"]}>
       <div className={styles["image-section"]}>
-        <Image src={props.src} alt={props.author} />
+        <Image src={props.src} alt={props.alt} />
       </div>
       <div className={styles["title-section"]}>
         <Heading>{props.title}</Heading>
