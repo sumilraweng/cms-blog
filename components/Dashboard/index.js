@@ -6,7 +6,11 @@ export default function Dashboard(props) {
   return (
     <div className={styles["blog-cards"]}>
       {props.blog.map((blogElement) => (
-        <a key={blogElement.uid} href="/#" className={styles["blog-link"]}>
+        <a
+          key={blogElement.uid}
+          href={`/blog/${blogElement.uid}`}
+          className={styles["blog-link"]}
+        >
           <Card
             src={blogElement.blog_image.url}
             author={blogElement.title}

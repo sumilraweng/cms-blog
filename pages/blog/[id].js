@@ -1,12 +1,22 @@
 import BlogComponent from "../../components/BlogComponent";
-import { getBlogByParams } from "../../helper/fetchAllEmployee";
-
+import {
+  getBlogByParams,
+  getFooter,
+  getHeader,
+} from "../../helper/fetchAllEmployee";
+import Navigation from "../../components/Navigation";
+import Footer from "../../components/footer";
 function Blog(props) {
-  return props.data === undefined ? (
-    <h1> {props.message}</h1>
+  return props.isError ? (
+    <h1>Backend server is not responding try again later</h1>
   ) : (
     <div>
+      {" "}
+      <header>
+        <Navigation data={props.header} />
+      </header>
       <BlogComponent blog={props} />
+      <Footer data={props.footer} />
     </div>
   );
 }
@@ -22,7 +32,6 @@ export const getStaticPaths = async () => {
       };
     }),
   ];
-  console.log(paths);
 
   return {
     paths,
@@ -33,18 +42,20 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context) => {
   try {
     let data = await getBlogByParams({ id: context.params.id });
-    console.log(data);
+    let header = await getHeader();
+    let footer = await getFooter();
     return {
       props: {
         data: data[0],
+        header: header[0],
+        footer: footer[0],
       },
     };
   } catch (err) {
     console.log(err);
     return {
       props: {
-        data: undefined,
-        message: " Loading ...",
+        isError: true,
       },
     };
   }

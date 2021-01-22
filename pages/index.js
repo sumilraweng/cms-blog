@@ -1,23 +1,48 @@
 import Head from "next/head";
+import Navigation from "../components/Navigation";
+import Footer from "../components/footer";
 import styles from "../styles/Home.module.css";
-import { getBlogByParams } from "../helper/fetchAllEmployee";
+import {
+  getBlogByParams,
+  getHeader,
+  getFooter,
+} from "../helper/fetchAllEmployee";
 import Dashboard from "../components/Dashboard";
 
 function Home(props) {
-  // console.log(EmployeeList);
-  return (
-    <div className={styles.container}>
-      <Dashboard blog={props.data} />
+  return props.isError ? (
+    <h1>Backend server is not responding try again later</h1>
+  ) : (
+    <div>
+      <header>
+        <Navigation data={props.header} />
+      </header>
+      <div className={styles.container}>
+        <Dashboard blog={props.data} />
+      </div>
+      <Footer data={props.footer} />
     </div>
   );
 }
 
 export const getStaticProps = async () => {
-  let allBlogs = await getBlogByParams();
-  return {
-    props: {
-      data: allBlogs[0],
-    },
-  };
+  try {
+    let allBlogs = await getBlogByParams();
+    let header = await getHeader();
+    let footer = await getFooter();
+    return {
+      props: {
+        data: allBlogs[0],
+        header: header[0],
+        footer: footer[0],
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        isError: true,
+      },
+    };
+  }
 };
 export default Home;
