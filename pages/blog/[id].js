@@ -1,17 +1,22 @@
-import BlogComponent from "../../components/BlogComponent";
 import {
+  getHeader,
   getBlogByParams,
   getFooter,
-  getHeader,
 } from "../../helper/fetchAllEmployee";
+
+import Head from "next/head";
 import Navigation from "../../components/Navigation";
+import BlogComponent from "../../components/BlogComponent";
 import Footer from "../../components/footer";
 function Blog(props) {
   return props.isError ? (
     <h1>Backend server is not responding try again later</h1>
   ) : (
     <div>
-      {" "}
+      <Head>
+        <title>CMS Blog</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>{" "}
       <header>
         <Navigation data={props.header} />
       </header>
@@ -23,17 +28,14 @@ function Blog(props) {
 
 export const getStaticProps = async (context) => {
   try {
-    let data = await getBlogByParams({ id: context.params.id });
-    data = data[0];
     let header = await getHeader();
-    header = header[0];
+    let data = await getBlogByParams({ id: context.params.id });
     let footer = await getFooter();
-    footer = footer[0];
     return {
       props: {
-        data: data,
-        header: header,
-        footer: footer,
+        header: header[0],
+        blog: data[0],
+        footer: footer[0],
       },
     };
   } catch (err) {
@@ -60,7 +62,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 };
 

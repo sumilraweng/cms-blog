@@ -8,6 +8,10 @@ const Stack = Contentstack.Stack(
   process.env.REGION
 );
 
+export const getHeader = () => {
+  return Stack.ContentType("sumil_header").Query().toJSON().find();
+};
+
 export const getBlogByParams = (obj = {}) => {
   const Query = Stack.ContentType(process.env.CONTENT).Query();
   if (obj.id) {
@@ -18,10 +22,6 @@ export const getBlogByParams = (obj = {}) => {
   } else {
     return Query.toJSON().find();
   }
-};
-
-export const getHeader = () => {
-  return Stack.ContentType("sumil_header").Query().toJSON().find();
 };
 
 export const getFooter = () => {
