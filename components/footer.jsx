@@ -3,25 +3,24 @@ import "../fontawesome";
 import styles from "./footer.module.scss";
 
 function Footer(props) {
-  const link = props.data[0].social_media_link;
   return (
     <div className={styles["footer"]}>
       <ul>
         <li>
           {" "}
-          <a href={link[2].href}>
+          <a href={props.data[0].social_media_link[2].link.href}>
             <FontAwesomeIcon icon={["fab", "twitter"]} />
           </a>{" "}
         </li>
         <li>
           {" "}
-          <a href={link[0].href}>
+          <a href={props.data[0].social_media_link[1].link.href}>
             <FontAwesomeIcon icon={["fab", "linkedin"]} />
           </a>{" "}
         </li>
         <li>
           {" "}
-          <a href={link[1].href}>
+          <a href={props.data[0].social_media_link[1].link.href}>
             <FontAwesomeIcon icon={["fab", "facebook"]} />
           </a>{" "}
         </li>

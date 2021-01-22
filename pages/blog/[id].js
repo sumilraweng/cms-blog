@@ -21,6 +21,31 @@ function Blog(props) {
   );
 }
 
+export const getStaticProps = async (context) => {
+  try {
+    let data = await getBlogByParams({ id: context.params.id });
+    data = data[0];
+    let header = await getHeader();
+    header = header[0];
+    let footer = await getFooter();
+    footer = footer[0];
+    return {
+      props: {
+        data: data,
+        header: header,
+        footer: footer,
+      },
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {
+        isError: true,
+      },
+    };
+  }
+};
+
 export const getStaticPaths = async () => {
   let data = await getBlogByParams();
   let paths = [
@@ -37,28 +62,6 @@ export const getStaticPaths = async () => {
     paths,
     fallback: true,
   };
-};
-
-export const getStaticProps = async (context) => {
-  try {
-    let data = await getBlogByParams({ id: context.params.id });
-    let header = await getHeader();
-    let footer = await getFooter();
-    return {
-      props: {
-        data: data[0],
-        header: header[0],
-        footer: footer[0],
-      },
-    };
-  } catch (err) {
-    console.log(err);
-    return {
-      props: {
-        isError: true,
-      },
-    };
-  }
 };
 
 export default Blog;

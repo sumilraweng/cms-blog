@@ -2,6 +2,7 @@ import styles from "../styles/Navigation.module.scss";
 
 const Navigation = (props) => {
   // const { src, width, height } = props.logo;
+
   const data = props.data[0];
   const width = 200;
   const height = 100;
